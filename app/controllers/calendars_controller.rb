@@ -1,4 +1,5 @@
 class CalendarsController < ApplicationController
+  wdays = ['(日)','(月)','(火)','(水)','(木)','(金)','(土)']
 
   # １週間のカレンダーと予定が表示されるページ
   def index
@@ -8,8 +9,12 @@ class CalendarsController < ApplicationController
 
   # 予定の保存
   def create
+
     plan.create(plan_params)
-    redirect_to action: :index
+
+    binding.pry
+    Plan.create(plan_paramsaste)
+    redirect_to action: 
   end
 
   private
@@ -34,7 +39,11 @@ class CalendarsController < ApplicationController
       plans.each do |plan|
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
+
       days = { :month: (@todays_date + x).month, :date => (@todays_date+x).day, :plans: today_plans}
+
+      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans, wday: day}
+
       @week_days.push(days)
     end
 
